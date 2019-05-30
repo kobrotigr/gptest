@@ -28,4 +28,6 @@ if __name__ == '__main__':
     flights.sort_by_time()
 
     print("Cheapest: " + str(flights.get_cheapest()))
+    print("Cheapest BYN: " + str(flights.get_cheapest_byn()))
+    
     print(flights)

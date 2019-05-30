@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 from operator import attrgetter
 
-from utils import Flight
+from utils import Flight, eur_to_byn_converter
 
 
 class Flights:
@@ -36,6 +36,14 @@ class Flights:
         if self._flights:
             cheapest_flights = sorted(self._flights, key=attrgetter('price'))
             return cheapest_flights[0]
+        return self.__str__()
+    
+    def get_cheapest_byn(self):
+        if self._flights:
+            cheapest_flights = sorted(self._flights, key=attrgetter('price'))
+            cheapest_flight = cheapest_flights[0]
+            byn_cheapest = Flight(eur_to_byn_converter(cheapest_flight.price), cheapest_flight.number, cheapest_flight.datetime)
+            return byn_cheapest
         return self.__str__()
 
     def sort_by_time(self):
