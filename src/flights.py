@@ -4,6 +4,7 @@ from operator import attrgetter
 import json
 
 from utils import Flight, eur_to_byn_converter
+from dohop_api import get_dohop_flights_api
 
 
 class Flights:
@@ -32,7 +33,7 @@ class Flights:
         if self._flights:
             return str(self._flights[:10])
         return 'No Flights'
-
+    
     def get_cheapest(self):
         if self._flights:
             cheapest_flights = sorted(self._flights, key=attrgetter('price'))
@@ -43,7 +44,8 @@ class Flights:
         if self._flights:
             cheapest_flights = sorted(self._flights, key=attrgetter('price'))
             cheapest_flight = cheapest_flights[0]
-            byn_cheapest = Flight(eur_to_byn_converter(cheapest_flight.price), cheapest_flight.number, cheapest_flight.datetime)
+            byn_cheapest = Flight(eur_to_byn_converter(cheapest_flight.price), cheapest_flight.number,
+                                  cheapest_flight.datetime)
             return byn_cheapest
         return self.__str__()
 
@@ -80,4 +82,8 @@ class Flights:
             f.write(r.url + '\n')
 
     def get_dohop_flights(self):
-        pass
+        try:
+            for f in get_dohop_flights_api(self._airport_from, self._airport_to, self._departure_date, self._return_date):
+                self._flights.append(f)
+        except:
+            pass
