@@ -35,6 +35,7 @@ def get_dohop_flights_api(airport_from, airport_to, departure_date, return_date=
         json.dump(r_dep, f)
         
     for fare in r_dep['fares']:
+        # TODO number && datetime
         yield Flight(fare['fare'], 'None', 'None')
 
 

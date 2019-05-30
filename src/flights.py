@@ -83,7 +83,8 @@ class Flights:
 
     def get_dohop_flights(self):
         try:
-            for f in get_dohop_flights_api(self._airport_from, self._airport_to, self._departure_date, self._return_date):
+            for f in get_dohop_flights_api(self._airport_from, self._airport_to, self._departure_date,
+                                           self._return_date):
                 self._flights.append(f)
-        except:
+        except requests.exceptions.HTTPError:
             pass
