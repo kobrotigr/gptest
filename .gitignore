@@ -1,3 +1,4 @@
 src/rawrequests.txt
 __pycache__
 \.idea/
+*.json

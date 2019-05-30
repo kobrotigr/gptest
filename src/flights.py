@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 from operator import attrgetter
+import json
 
 from utils import Flight, eur_to_byn_converter
 
@@ -65,6 +66,8 @@ class Flights:
         r = requests.get(url=self.KIWI_API_URL, params=self.kiwi_params)
         if r.status_code == requests.codes.ok:
             response_date = r.json()
+            with open('data/kiwi_data.json', 'w') as f:
+                json.dump(response_date, f)
 
             for f in response_date['data']:
                 timestamp = f['dTime']
